@@ -16,8 +16,13 @@ class StringCalculator{
     }
 
     public static void main(String args[]){
+        //For empty string
         System.out.println(Add(""));
+
         System.out.println(Add("1"));
         System.out.println(Add("1,2"));
+
+        //for more than two numbers
+        System.out.println(Add("1,2,3,4,5,5,6,7,8,8,9,2,0,-10"));
     }
 }

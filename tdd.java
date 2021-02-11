@@ -40,6 +40,9 @@ class StringCalculator{
                     if(Integer.parseInt(p[k]) < 0){
                         negatives += Integer.parseInt(p[k]) + ",";
                     }
+                    if(Integer.parseInt(p[k]) > 1000){
+                        continue;
+                    }
                     sum += Integer.parseInt(p[k]);
                     //System.out.println(g);
                 }
@@ -57,6 +60,9 @@ class StringCalculator{
                 for(String k:temp){
                     if(Integer.parseInt(k) < 0){
                         negatives += Integer.parseInt(k) + ",";
+                    }
+                    if(Integer.parseInt(k) > 1000){
+                        continue;
                     }
                     sum += Integer.parseInt(k);
                 }

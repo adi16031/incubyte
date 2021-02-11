@@ -1,4 +1,4 @@
-
+import java.util.*;
 class StringCalculator{
 
     public static int counter = 0;
@@ -14,7 +14,7 @@ class StringCalculator{
         }
         else{
             int index = getIndexofFirstNumber(numbers);
-            if(index > 0){
+            if(index > 0 && numbers.charAt(2)!= '['){
                 String negatives = "";
                 String delimiters = "";
                 if(index>2)
@@ -51,26 +51,65 @@ class StringCalculator{
                 }
                 return sum;
             }
-            else{
-                String arr[]= numbers.split("\n");
-            sum = 0;
-            for(String t :arr){
-                String negatives ="";
-                String temp[] = t.split(",");
-                for(String k:temp){
-                    if(Integer.parseInt(k) < 0){
-                        negatives += Integer.parseInt(k) + ",";
+            if(index > 0 && numbers.charAt(2)== '['){
+                List<String> delim = new ArrayList<String>();
+                String temp = "";
+                String negatives = "";
+                int j =0;
+                for(int i =1;i<index;i++){
+                    if(numbers.charAt(i) == '['){
+                        for(j=i+1;j<index;j++){
+                            if(numbers.charAt(j) != ']')
+                                temp += numbers.charAt(j);
+                            else
+                                break;
+                        }
+                        i = j;
+                        delim.add(temp);
+                        temp ="";
                     }
-                    if(Integer.parseInt(k) > 1000){
+                }
+                temp = "";
+                String nums = numbers.substring(index, numbers.length());
+                for(int i = 0;i<delim.size();i++){
+                    temp = nums.replaceAll(delim.get(i), "");
+                }
+                String p[]= temp.split("");
+                for(int k=0;k<p.length;k++){
+                    if(Integer.parseInt(p[k]) < 0){
+                        negatives += Integer.parseInt(p[k]) + ",";
+                    }
+                    if(Integer.parseInt(p[k]) > 1000){
                         continue;
                     }
-                    sum += Integer.parseInt(k);
+                    sum += Integer.parseInt(p[k]);
+                    //System.out.println(g);
                 }
                 if(negatives.length()>0){
                     throw new Exception ("negatives not allowed " +negatives.substring(0,negatives.length()-1));
                 }
-
+                return sum;
             }
+            else{
+                String arr[]= numbers.split("\n");
+                sum = 0;
+                for(String t :arr){
+                    String negatives ="";
+                    String temp[] = t.split(",");
+                    for(String k:temp){
+                        if(Integer.parseInt(k) < 0){
+                            negatives += Integer.parseInt(k) + ",";
+                        }
+                        if(Integer.parseInt(k) > 1000){
+                            continue;
+                        }
+                        sum += Integer.parseInt(k);
+                    }
+                    if(negatives.length()>0){
+                        throw new Exception ("negatives not allowed " +negatives.substring(0,negatives.length()-1));
+                    }
+
+                }
             }
 
             return sum;
@@ -105,10 +144,11 @@ class StringCalculator{
             System.out.println(Add("//;\n1;2"));
 
             //For negatives
-            Add("-2");
-            System.out.println(Add("1,5,-7,-8"));
+            //Add("-2");
+            //System.out.println(Add("1,5,-7,-8"));
             // To print the count of method calls
             System.out.println(counter);
+
         }catch(Exception e){
             System.out.println(e.getMessage());
         }

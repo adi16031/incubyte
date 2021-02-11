@@ -42,9 +42,18 @@ class StringCalculator{
                 String arr[]= numbers.split("\n");
             sum = 0;
             for(String t :arr){
+                String negatives ="";
                 String temp[] = t.split(",");
-                for(String k:temp)
-                sum += Integer.parseInt(k);
+                for(String k:temp){
+                    if(Integer.parseInt(k) < 0){
+                        negatives += Integer.parseInt(k) + ",";
+                    }
+                    sum += Integer.parseInt(k);
+                }
+                if(negatives.length()>0){
+                    throw new Exception ("negatives not allowed " +negatives.substring(0,negatives.length()-1));
+                }
+
             }
             }
 
@@ -79,8 +88,9 @@ class StringCalculator{
             //for delimiters case
             System.out.println(Add("//;\n1;2"));
 
-            //
+            //For negatives
             Add("-2");
+            System.out.println(Add("1,5,-7,-8"));
         }catch(Exception e){
             System.out.println(e.getMessage());
         }

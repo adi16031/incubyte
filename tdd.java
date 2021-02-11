@@ -1,7 +1,10 @@
 
 class StringCalculator{
 
+    public static int counter = 0;
+
     public static int Add(String numbers)throws Exception{
+        counter++ ;
         int sum =0;
         if(numbers.length() == 0){
             return 0;
@@ -12,6 +15,7 @@ class StringCalculator{
         else{
             int index = getIndexofFirstNumber(numbers);
             if(index > 0){
+                String negatives = "";
                 String delimiters = "";
                 if(index>2)
                   delimiters = numbers.substring(2, index);
@@ -33,8 +37,14 @@ class StringCalculator{
                 }
                 String p[] = nums.split("");
                 for(int k=0;k<p.length;k++){
+                    if(Integer.parseInt(p[k]) < 0){
+                        negatives += Integer.parseInt(p[k]) + ",";
+                    }
                     sum += Integer.parseInt(p[k]);
                     //System.out.println(g);
+                }
+                if(negatives.length()>0){
+                    throw new Exception ("negatives not allowed " +negatives.substring(0,negatives.length()-1));
                 }
                 return sum;
             }
@@ -79,7 +89,7 @@ class StringCalculator{
             System.out.println(Add("1,2"));
 
             //for more than two numbers
-            System.out.println(Add("1,2,3,4,5,5,6,7,8,8,9,2,0,-10"));
+            System.out.println(Add("1,2,3,4,5,5,6,7,8,8,9,2,0"));
 
             //for new line (\n) delimiter
             System.out.println(Add("1,2\n3"));
@@ -91,6 +101,8 @@ class StringCalculator{
             //For negatives
             Add("-2");
             System.out.println(Add("1,5,-7,-8"));
+            // To print the count of method calls
+            System.out.println(counter);
         }catch(Exception e){
             System.out.println(e.getMessage());
         }

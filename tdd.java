@@ -1,10 +1,13 @@
 
 class StringCalculator{
 
-    public static int Add(String numbers){
+    public static int Add(String numbers)throws Exception{
         int sum =0;
         if(numbers.length() == 0){
             return 0;
+        }
+        else if(numbers.charAt(0) == '-'){
+            throw new Exception("neagtives not allowed "+numbers);
         }
         else{
             int index = getIndexofFirstNumber(numbers);
@@ -59,20 +62,28 @@ class StringCalculator{
     }
 
     public static void main(String args[]){
-        //For empty string
-        System.out.println(Add(""));
+        try{
+            //For empty string
+            System.out.println(Add(""));
 
-        System.out.println(Add("1"));
-        System.out.println(Add("1,2"));
+            System.out.println(Add("1"));
+            System.out.println(Add("1,2"));
 
-        //for more than two numbers
-        System.out.println(Add("1,2,3,4,5,5,6,7,8,8,9,2,0,-10"));
+            //for more than two numbers
+            System.out.println(Add("1,2,3,4,5,5,6,7,8,8,9,2,0,-10"));
 
-        //for new line (\n) delimiter
-        System.out.println(Add("1,2\n3"));
-        System.out.println(Add("1\n2"));
+            //for new line (\n) delimiter
+            System.out.println(Add("1,2\n3"));
+            System.out.println(Add("1\n2"));
 
-        //for delimiters case
-        System.out.println(Add("//;\n1;2"));
+            //for delimiters case
+            System.out.println(Add("//;\n1;2"));
+
+            //
+            Add("-2");
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+
     }
 }
